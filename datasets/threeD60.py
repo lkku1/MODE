@@ -92,11 +92,11 @@ class ThreeD60(data.Dataset):
         rgb = cv2.imread(rgb_name)
         rgb = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
         rgb = cv2.resize(rgb, dsize=(self.w, self.h))
-        if self.is_training:
-            sem = np.where(cv2.imread(rgb_name + "_sem.jpg", cv2.IMREAD_GRAYSCALE) > 0.0, 1.0, 0.0)
-            sem = cv2.resize(sem, dsize=(self.w, self.h), interpolation=cv2.INTER_NEAREST).astype(np.float32)
+        #if self.is_training:
+        #    sem = np.where(cv2.imread(rgb_name + "_sem.jpg", cv2.IMREAD_GRAYSCALE) > 0.0, 1.0, 0.0)
+        #    sem = cv2.resize(sem, dsize=(self.w, self.h), interpolation=cv2.INTER_NEAREST).astype(np.float32)
 
-        depth_patch = (1 - cv2.imread(rgb_name+"_patch_small.png", -1)/255)*self.max_depth_meters
+        #depth_patch = (1 - cv2.imread(rgb_name+"_patch_small.png", -1)/255)*self.max_depth_meters
 
         depth_name, _ = recover_filename(os.path.join(self.root_dir, self.rgb_depth_list[idx][1]))
         # depth_name, _ = recover_filename(self.rgb_depth_list[idx][1])
@@ -118,14 +118,14 @@ class ThreeD60(data.Dataset):
         rgb = np.roll(rgb, roll_idx, 1)
         gt_depth = np.roll(gt_depth, roll_idx, 1)
 
-        if self.is_training:
-            sem = np.roll(sem, roll_idx, 1)
+        #if self.is_training:
+        #    sem = np.roll(sem, roll_idx, 1)
 
         flip = 0
         if self.is_training and self.LR_filp_augmentation and random.random() > 0.5:
             flip = 1
             rgb = cv2.flip(rgb, 1)
-            sem = cv2.flip(sem, 1)
+            #sem = cv2.flip(sem, 1)
             gt_depth = cv2.flip(gt_depth, 1)
 
 
@@ -142,10 +142,10 @@ class ThreeD60(data.Dataset):
         inputs["rgb"] = self.normalize(rgb)
         inputs["roll_idx"] = int(roll_idx//4)
         inputs["flip"] = flip
-        inputs["depth_patch"] = depth_patch
-        inputs["normalized_rgb"] = self.normalize(aug_rgb)
-        if self.is_training:
-            inputs["sem"] = torch.from_numpy(np.expand_dims(sem, axis=0))
+        #inputs["depth_patch"] = depth_patch
+        #inputs["normalized_rgb"] = self.normalize(aug_rgb)
+        #if self.is_training:
+        #    inputs["sem"] = torch.from_numpy(np.expand_dims(sem, axis=0))
         inputs["gt_depth"] = torch.from_numpy(np.expand_dims(gt_depth, axis=0))
         inputs["val_mask"] = ((inputs["gt_depth"] > 0.1) & (inputs["gt_depth"] <= self.max_depth_meters)
                               & ~torch.isnan(inputs["gt_depth"]))
