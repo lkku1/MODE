@@ -106,7 +106,7 @@ def main():
             depth_min = outputs.min()
             depth_max = outputs.max()
             max_val = (2 ** (8 * 1)) - 1
-            depth_patch = max_val * (outputs - depth_min) / (depth_max - depth_min)
+            depth_patch = (1-int(max_val * (outputs - depth_min) / (depth_max - depth_min))/max_val)*10
 
             outputs = model(equi_inputs, depth_patch, roll_idx, flip)
 
