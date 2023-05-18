@@ -91,10 +91,10 @@ class Matterport3D(data.Dataset):
         #     sem = np.where(cv2.imread(rgb_name + "_sem.jpg", cv2.IMREAD_GRAYSCALE) > 0.0, 1.0, 0.0)
         #     sem = cv2.resize(sem, dsize=(self.w, self.h), interpolation=cv2.INTER_NEAREST).astype(np.float32)
 
-        sem = np.where(cv2.imread(rgb_name + "_sem.jpg", cv2.IMREAD_GRAYSCALE) > 0.0, 1.0, 0.0)
-        sem = cv2.resize(sem, dsize=(self.w, self.h), interpolation=cv2.INTER_NEAREST).astype(np.float32)
+        # sem = np.where(cv2.imread(rgb_name + "_sem.jpg", cv2.IMREAD_GRAYSCALE) > 0.0, 1.0, 0.0)
+        # sem = cv2.resize(sem, dsize=(self.w, self.h), interpolation=cv2.INTER_NEAREST).astype(np.float32)
 
-        depth_patch = (1 - cv2.imread(rgb_name+"_patch.png", -1)/255)*self.max_depth_meters
+        # depth_patch = (1 - cv2.imread(rgb_name+"_patch.png", -1)/255)*self.max_depth_meters
 
         # depth_patch[:, :] = 0
 
@@ -132,10 +132,10 @@ class Matterport3D(data.Dataset):
         inputs["rgb"] = rgb
         inputs["roll_idx"] = roll_idx
         inputs["flip"] = flip
-        inputs["depth_patch"] = depth_patch
+        # inputs["depth_patch"] = depth_patch
         # if self.is_training:
         #     inputs["sem"] = torch.from_numpy(np.expand_dims(sem, axis=0))
-        inputs["sem"] = torch.from_numpy(np.expand_dims(sem, axis=0))
+        # inputs["sem"] = torch.from_numpy(np.expand_dims(sem, axis=0))
         inputs["normalized_rgb"] = self.normalize(aug_rgb)
         inputs["gt_depth"] = torch.from_numpy(np.expand_dims(gt_depth, axis=0))
         inputs["val_mask"] = ((inputs["gt_depth"] > 0.1) & (inputs["gt_depth"] <= self.max_depth_meters)
