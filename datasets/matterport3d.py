@@ -110,13 +110,13 @@ class Matterport3D(data.Dataset):
             # random yaw rotation
             roll_idx = random.randint(0, self.w//4)
             rgb = np.roll(rgb, roll_idx*4, 1)
-            sem = np.roll(sem, roll_idx*4, 1)
+            #sem = np.roll(sem, roll_idx*4, 1)
             gt_depth = np.roll(gt_depth, roll_idx*4, 1)
 
         if self.is_training and self.LR_filp_augmentation and random.random() > 0.5:
             flip = 1
             rgb = cv2.flip(rgb, 1)
-            sem = cv2.flip(sem, 1)
+            #sem = cv2.flip(sem, 1)
             gt_depth = cv2.flip(gt_depth, 1)
 
         if self.is_training and self.color_augmentation and random.random() > 0.5:
