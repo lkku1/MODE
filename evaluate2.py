@@ -67,7 +67,7 @@ def main():
             "CDSFS": CDSFS,
             "CDSFSU": CDSFSU}
 
-    model = Net(pretrained_dict['layers'], pretrained_dict['height'], pretrained_dict['width'])
+    model = Net[settings.network](pretrained_dict['layers'], pretrained_dict['height'], pretrained_dict['width'])
     model.to(device)
     model_state_dict = model.state_dict()
 
