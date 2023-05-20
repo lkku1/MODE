@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-
+import os
 from .vit import (
     _make_pretrained_vitb_rn50_384,
     _make_pretrained_vitl16_384,
@@ -79,7 +79,7 @@ def _make_scratch(in_shape, out_shape, groups=1, expand=False):
 
 def _make_pretrained_efficientnet_lite3(use_pretrained, exportable=False):
     efficientnet = torch.hub.load(
-        "/media/lyb/CE7258D87258C73D/linux/github/refine/rwightman_gen-efficientnet-pytorch_master",
+        os.getcwd() + "/rwightman_gen-efficientnet-pytorch_master",
         "tf_efficientnet_lite3",
         pretrained=use_pretrained,
         source= 'local'
