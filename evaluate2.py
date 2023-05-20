@@ -102,7 +102,7 @@ def main():
 
             rgb_patch, _, _, _ = equi2pers(equi_inputs, 105, 3, patch_size=256)
             patch = torch.squeeze(torch.cat(torch.split(rgb_patch, 1, dim=-1), dim=0), dim=-1)  # bs*18, 3, 128, 128
-            outputs = torch.squeeze(torch.cat(torch.split(model(patch), 1, dim=0), dim=-1), dim=0)
+            outputs = torch.squeeze(torch.cat(torch.split(depthinit(patch), 1, dim=0), dim=-1), dim=0)
             depth_min = outputs.min()
             depth_max = outputs.max()
             max_val = (2 ** (8 * 1)) - 1
