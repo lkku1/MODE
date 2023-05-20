@@ -96,18 +96,19 @@ def main():
         for batch_idx, inputs in enumerate(pbar):
 
             equi_inputs = inputs["normalized_rgb"].to(device)
+            equi_rgb = inputs["rgb"].to(device)
             roll_idx = inputs["roll_idx"].to(device)
             flip = inputs["flip"].to(device)
             # depth_patch = inputs["depth_patch"].to(device)
 
-            rgb_patch, _, _, _ = equi2pers(equi_inputs, 105, 3, patch_size=256)
+            rgb_patch, _, _, _ = equi2pers(equi_rgb, 105, 3, patch_size=256)
             patch = torch.squeeze(torch.cat(torch.split(rgb_patch, 1, dim=-1), dim=0), dim=-1)  # bs*18, 3, 128, 128
             outputs = torch.squeeze(torch.cat(torch.split(depthinit(patch), 1, dim=0), dim=-1), dim=0)
             depth_min = outputs.min()
             depth_max = outputs.max()
             max_val = (2 ** (8 * 1)) - 1
-            depth_patch = (1-int(max_val * (outputs - depth_min) / (depth_max - depth_min))/max_val)*10
-
+            depth_patch = (1 - (max_val * (outputs - depth_min) / (depth_max - depth_min)).int() / max_val) * 10.0
+            depth_path = torch.unsqueeze(depth_patch, dim=0)
             outputs = model(equi_inputs, depth_patch, roll_idx, flip)
 
             pred_depth = outputs["pred_depth"].detach().cpu()
