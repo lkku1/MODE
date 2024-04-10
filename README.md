@@ -11,3 +11,5 @@ Matterport3D https://drive.google.com/drive/folders/1XETTA8FeOVxk6QXykwXkwRbQyOH
 Stanford2d3D https://drive.google.com/file/d/1mKar4rR13sluTP4Q3uX4vJWFd3YPKF7V/view?usp=drive_link
 
 midas_v21_small_256 [https://github.com/isl-org/MiDaS](https://github.com/isl-org/MiDaS/releases/download/v2_1/midas_v21_small_256.pt)https://github.com/isl-org/MiDaS/releases/download/v2_1/midas_v21_small_256.pt
+
+pred_512_13 https://drive.google.com/file/d/1Vuc8HRhEiEoughz_jBcBjyMgdPHk6_En/view?usp=drive_link
