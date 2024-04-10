@@ -108,7 +108,6 @@ def main():
             depth_max = outputs.max()
             max_val = (2 ** (8 * 1)) - 1
             depth_patch = (1 - (max_val * (outputs - depth_min) / (depth_max - depth_min)).int() / max_val) * 10.0
-            depth_path = torch.unsqueeze(depth_patch, dim=0)
             outputs = model(equi_inputs, depth_patch, roll_idx, flip)
 
             pred_depth = outputs["pred_depth"].detach().cpu()
