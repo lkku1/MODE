@@ -15,7 +15,7 @@ def compute_depth_metrics(gt, pred, mask):
     gt[gt < 0.1] = 0.1
     pred[pred < 0.1] = 0.1
     gt[gt > 10.0] = 10.0
-    gt[pred > 10.0] = 10.0
+    pred[pred > 10.0] = 10.0
 
     pred *= torch.median(gt) / torch.median(pred)
 
